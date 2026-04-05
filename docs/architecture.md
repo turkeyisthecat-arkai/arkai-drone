@@ -1,14 +1,14 @@
 # ARKAI Autonomous AI Drone Architecture
 
 ## 1. Mission Objective
-Build a fully autonomous intelligent drone stack that runs on **Jetson Orin Nano**, integrates **PX4/ArduPilot**, performs **local AI inference**, and executes real-time obstacle avoidance with a **multi-camera + LiDAR + GPS + IMU** sensor suite.
+Build a fully autonomous intelligent drone stack that runs on **Jetson Orin Nano**, integrates **PX4/ArduPilot**, performs **local AI inference**, and executes real-time obstacle avoidance with a **multi-camera + LiDAR + GPS + IMU** sensor suite, plus close-range ultrasonic safety sensing.
 
 ## 2. High-Level System Layers
 
 1. **Hardware Layer**
    - Flight controller: PX4 or ArduPilot compatible board.
    - Companion computer: Jetson Orin Nano.
-   - Sensors: stereo/mono cameras, LiDAR, GNSS (GPS), IMU.
+   - Sensors: front/rear/down cameras (+ optional side cameras), LiDAR, ultrasonic, GNSS (GPS), IMU.
 
 2. **Middleware + Communication Layer**
    - Internal pub/sub event bus for low-latency module communication.
@@ -18,7 +18,7 @@ Build a fully autonomous intelligent drone stack that runs on **Jetson Orin Nano
 3. **Perception + AI Layer**
    - Multi-camera perception (detection/segmentation/depth estimation).
    - LiDAR obstacle extraction.
-   - Sensor fusion (GPS+IMU+LiDAR+vision).
+   - Sensor fusion (GPS+IMU+LiDAR+ultrasonic+vision).
    - On-device inference acceleration (TensorRT/ONNX Runtime on Jetson).
 
 4. **Decision + Navigation Layer**
@@ -37,9 +37,10 @@ Build a fully autonomous intelligent drone stack that runs on **Jetson Orin Nano
 2. `sensing/fusion.py` produces a unified state estimate.
 3. `ai/perception.py` outputs detected objects and free-space constraints.
 4. `ai/avoidance.py` updates safety constraints.
-5. `navigation/planner.py` computes desired trajectory.
-6. `autopilot/*_adapter.py` converts trajectory to FCU commands.
-7. `comm/telemetry.py` emits status to ground station.
+5. `ai/decision_engine.py` selects autonomous mission behavior.
+6. `navigation/planner.py` computes desired trajectory.
+7. `autopilot/*_adapter.py` converts trajectory to FCU commands, handles telemetry, and mode switching.
+8. `comm/telemetry.py` emits status to ground station.
 
 ## 4. Communication Design
 
