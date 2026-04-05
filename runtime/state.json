@@ -1,0 +1,129 @@
+{
+  "heartbeat": "2026-04-05T23:24:43.648918+00:00",
+  "tasks": [],
+  "processed": [
+    {
+      "id": "a24a3309-9cff-4f36-ad9b-b7b765f219c5",
+      "kind": "command",
+      "payload": {
+        "command": "show status"
+      },
+      "created_at": "2026-04-05T23:24:43.646718+00:00"
+    },
+    {
+      "id": "1d5e7573-8620-47ab-9d82-8eccd2251cf2",
+      "kind": "command",
+      "payload": {
+        "command": "show heartbeat"
+      },
+      "created_at": "2026-04-05T23:24:43.647078+00:00"
+    },
+    {
+      "id": "bc646ed0-5545-4e69-9072-eccb8af9b7d7",
+      "kind": "command",
+      "payload": {
+        "command": "list memory"
+      },
+      "created_at": "2026-04-05T23:24:43.647354+00:00"
+    },
+    {
+      "id": "3855b01a-3dc1-4213-870b-a7dae4223f94",
+      "kind": "command",
+      "payload": {
+        "command": "list results"
+      },
+      "created_at": "2026-04-05T23:24:43.647717+00:00"
+    }
+  ],
+  "failed": [],
+  "results": [
+    {
+      "task_id": "a24a3309-9cff-4f36-ad9b-b7b765f219c5",
+      "kind": "command",
+      "command": "show status",
+      "output": {
+        "status": "ok",
+        "queued_tasks": 3,
+        "processed_count": 0,
+        "failed_count": 0,
+        "results_count": 0
+      },
+      "processed_at": "2026-04-05T23:24:43.649576+00:00"
+    },
+    {
+      "task_id": "1d5e7573-8620-47ab-9d82-8eccd2251cf2",
+      "kind": "command",
+      "command": "show heartbeat",
+      "output": {
+        "heartbeat": "2026-04-05T23:24:43.648918+00:00"
+      },
+      "processed_at": "2026-04-05T23:24:43.900584+00:00"
+    },
+    {
+      "task_id": "bc646ed0-5545-4e69-9072-eccb8af9b7d7",
+      "kind": "command",
+      "command": "list memory",
+      "output": {
+        "memory": {
+          "agent": "arkai-local-agent",
+          "version": "1.0",
+          "started_at": "2026-04-05T23:24:43.646223+00:00",
+          "notes": []
+        }
+      },
+      "processed_at": "2026-04-05T23:24:44.151721+00:00"
+    },
+    {
+      "task_id": "3855b01a-3dc1-4213-870b-a7dae4223f94",
+      "kind": "command",
+      "command": "list results",
+      "output": {
+        "results": [
+          {
+            "task_id": "a24a3309-9cff-4f36-ad9b-b7b765f219c5",
+            "kind": "command",
+            "command": "show status",
+            "output": {
+              "status": "ok",
+              "queued_tasks": 3,
+              "processed_count": 0,
+              "failed_count": 0,
+              "results_count": 0
+            },
+            "processed_at": "2026-04-05T23:24:43.649576+00:00"
+          },
+          {
+            "task_id": "1d5e7573-8620-47ab-9d82-8eccd2251cf2",
+            "kind": "command",
+            "command": "show heartbeat",
+            "output": {
+              "heartbeat": "2026-04-05T23:24:43.648918+00:00"
+            },
+            "processed_at": "2026-04-05T23:24:43.900584+00:00"
+          },
+          {
+            "task_id": "bc646ed0-5545-4e69-9072-eccb8af9b7d7",
+            "kind": "command",
+            "command": "list memory",
+            "output": {
+              "memory": {
+                "agent": "arkai-local-agent",
+                "version": "1.0",
+                "started_at": "2026-04-05T23:24:43.646223+00:00",
+                "notes": []
+              }
+            },
+            "processed_at": "2026-04-05T23:24:44.151721+00:00"
+          }
+        ]
+      },
+      "processed_at": "2026-04-05T23:24:44.402780+00:00"
+    }
+  ],
+  "memory": {
+    "agent": "arkai-local-agent",
+    "version": "1.0",
+    "started_at": "2026-04-05T23:24:43.646223+00:00",
+    "notes": []
+  }
+}
