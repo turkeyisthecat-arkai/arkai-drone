@@ -1,4 +1,12 @@
 from dataclasses import dataclass
+from enum import Enum
+
+
+class MissionPhase(str, Enum):
+    TAKEOFF = "takeoff"
+    NAVIGATE = "navigate"
+    COLLISION_AVOIDANCE = "collision_avoidance"
+    HOLD = "hold"
 
 
 @dataclass(slots=True)
