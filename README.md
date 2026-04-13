@@ -1,52 +1,51 @@
 # ARKAI Autonomous AI Drone System
 
-Reference starter architecture and codebase for a fully autonomous intelligent drone stack targeting Jetson Orin Nano.
+Simulation-first autonomous drone runtime scaffold targeting Jetson Orin Nano with PX4/ArduPilot adapters.
 
-## Target stack
-- Companion computer: Jetson Orin Nano
-- Flight controllers: PX4 or ArduPilot
-- Sensors: multi-camera, LiDAR, GPS, IMU
-- Capabilities: local AI inference, autonomous navigation, real-time obstacle avoidance
-
-## Repository layout
-
-```text
-.
-├── docs/
-│   └── architecture.md
-├── src/arkai_drone/
-│   ├── ai/
-│   ├── autopilot/
-│   ├── comm/
-│   ├── config/
-│   ├── core/
-│   ├── navigation/
-│   ├── runtime/
-│   └── sensing/
-└── tests/
-```
-
-## Modules
-- `sensing`: camera/LiDAR/GPS/IMU interfaces + fusion scaffold.
-- `ai`: local perception and obstacle avoidance logic.
-- `navigation`: trajectory planner + mission structures.
-- `autopilot`: adapter abstraction with PX4 and ArduPilot implementations.
-- `core`: orchestrator tying the autonomous loop together.
-- `comm`: starter event bus and telemetry envelope.
-- `runtime`: entrypoint for simulation/starter runtime.
-
-## Quick start
+## Run locally
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install -e . pytest
 pytest -q
-python -m arkai_drone.runtime.main
+python -m arkai_drone.runtime.main --cycles 10
 ```
 
-## Next implementation steps
-1. Replace placeholder sensor drivers with CSI/USB camera and LiDAR SDK integration.
-2. Integrate MAVSDK/DroneKit or direct MAVLink stack for command and telemetry.
-3. Add TensorRT/ONNX inference models and calibration pipeline.
-4. Add mission planner, geofence, return-to-home, and safety watchdogs.
+Run with a JSON/TOML config:
+
+```bash
+python -m arkai_drone.runtime.main --config ./configs/sim.toml --cycles 20
+```
+
+## Simulation mode
+
+`DroneSettings.simulation_mode` defaults to `true`. In simulation mode:
+- sensors provide deterministic stub data,
+- autopilot adapters only log trajectory commands,
+- safety and mission logic operate without requiring hardware SDKs.
+
+## Runtime outputs
+
+Every runtime cycle writes:
+- **Telemetry snapshot** (`telemetry_snapshot_path`) with mode, mission state, GPS, yaw, obstacle distance, chosen command, safety state, timestamp.
+- **Status snapshot** (`status_snapshot_path`) with overall runtime mode, mission status, and safety reasons.
+
+## Module responsibilities
+
+- `config`: dataclass settings + JSON/TOML config loader + validation.
+- `sensing`: camera/LiDAR/GPS/IMU stubs + fusion state estimator.
+- `ai`: perception placeholder + obstacle avoidance constraints.
+- `core`: orchestrator and safety watchdog (stale sensors, GPS/LiDAR/heartbeat/geofence checks).
+- `navigation`: mission model/state transitions and local planner command generation.
+- `autopilot`: adapter abstraction with PX4 and ArduPilot logging implementations.
+- `runtime`: CLI entrypoint, logging setup, execution loop.
+- `tests`: pytest coverage for orchestration, safety, planner, mission, and config loading.
+
+## Next recommended steps
+
+1. Replace sensor stubs with SITL/HITL bridges while preserving current interfaces.
+2. Route telemetry snapshots to a message bus or dashboard process.
+3. Expand mission execution (waypoint distance checks, target observation timers, mission queues).
+4. Harden safety policy with altitude ceiling, battery state, and actuator health.
+5. Add integration tests for longer mission scenarios and degraded recovery.
